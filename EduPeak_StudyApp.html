@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduPeak — Nigerian Study Platform</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- SPLASH -->
+    <div id="splash">
+      <img src="Marvel.png" alt="Marvel logo" class="sp-logo" />
+      <div class="sp-name">MarvelPeak</div>
+      <div class="sp-tag">Nigerian Study Platform</div>
+      <div class="sp-track"><div class="sp-fill" id="spBar"></div></div>
+      <div class="sp-status" id="spStatus">Initializing...</div>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay">
+      <div class="spinner"></div>
+      <p id="overlayTxt">Loading...</p>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ===== LOGIN PAGE ===== -->
+    <div class="page" id="pgLogin">
+      <div
+        id="pgLoginInner"
+        style="
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          padding: 2rem;
+        "
+      >
+        <div class="login-card">
+          <div class="lcard-logo">
+            <img src="Marvel.png" alt="Marvel logo" class="lcard-icon" />
+            <div>
+              <div class="lcard-name">MarvelPeak</div>
+              <div class="lcard-sub">Nigerian Study Platform</div>
+            </div>
+          </div>
+          <!-- Login form -->
+          <div id="formLogin">
+            <div class="lform">
+              <h2 class="fu">Welcome back</h2>
+              <p class="fu1">Sign in to continue your study journey</p>
+              <div class="lerr" id="loginErr"></div>
+              <div class="lform-group fu1">
+                <label class="lform-label">Username</label>
+                <input
+                  class="lform-input"
+                  id="liUser"
+                  placeholder="Enter username"
+                  autocomplete="username"
+                />
+              </div>
+              <div class="lform-group fu2">
+                <label class="lform-label">Password</label>
+                <input
+                  class="lform-input"
+                  id="liPass"
+                  type="password"
+                  placeholder="Enter password"
+                  autocomplete="current-password"
+                />
+              </div>
+              <button class="btn-gold fu2" onclick="doLogin()">
+                Sign In →
+              </button>
+              <div class="lform-divider fu3">or</div>
+              <button class="btn-ghost fu3" onclick="guestLogin()">
+                Continue as Guest
+              </button>
+              <div class="lform-switch fu3">
+                No account? <span onclick="showReg()">Create one free</span>
+              </div>
+            </div>
+          </div>
+          <!-- Register form -->
+          <div id="formReg" style="display: none">
+            <div class="lform">
+              <h2>Create Account</h2>
+              <p>Join thousands of Nigerian students</p>
+              <div class="lerr" id="regErr"></div>
+              <div class="lform-group">
+                <label class="lform-label">Full Name</label>
+                <input
+                  class="lform-input"
+                  id="rgName"
+                  placeholder="Your full name"
+                />
+              </div>
+              <div class="lform-group">
+                <label class="lform-label">Username</label>
+                <input
+                  class="lform-input"
+                  id="rgUser"
+                  placeholder="Choose a username"
+                />
+              </div>
+              <div class="lform-group">
+                <label class="lform-label">Password</label>
+                <input
+                  class="lform-input"
+                  id="rgPass"
+                  type="password"
+                  placeholder="Create a password"
+                />
+              </div>
+              <div class="lform-group">
+                <label class="lform-label">Exam Target</label>
+                <select class="lform-input" id="rgExam">
+                  <option value="JAMB">JAMB (UTME)</option>
+                  <option value="WAEC">WAEC / SSCE</option>
+                  <option value="Both">Both JAMB and WAEC</option>
+                </select>
+              </div>
+              <button class="btn-gold" onclick="doRegister()">
+                Create Account →
+              </button>
+              <div class="lform-switch" style="margin-top: 1.2rem">
+                Already registered? <span onclick="showLogin()">Sign in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== APP PAGE ===== -->
+    <div class="page" id="pgApp">
+      <!-- NAV -->
+      <nav class="nav">
+        <div class="nav-logo">
+          <img src="Marvel.png" alt="Marvel Logo" class="nav-logo-icon" />
+          <div class="nav-logo-name">MarvelPeak</div>
+        </div>
+        <div class="nav-tabs">
+          <button class="nav-tab active" onclick="goTab('dash')">
+            Dashboard
+          </button>
+          <button class="nav-tab" onclick="goTab('qs')">Practice</button>
+          <button class="nav-tab" onclick="goTab('lb')">Leaderboard</button>
+        </div>
+        <div class="nav-right">
+          <div class="nav-xp">⚡ <span id="navXP">0</span> XP</div>
+          <div class="nav-av" id="navAv">?</div>
+          <button class="nav-out" onclick="doLogout()">Logout</button>
+        </div>
+      </nav>
+
+      <!-- DASHBOARD -->
+      <div class="sub active" id="subDash">
+        <div class="dash">
+          <div class="welcome fu">
+            <h2>Good day, <span id="wName">Student</span>! 👋</h2>
+            <p>
+              Your exam is counting down. Let's sharpen that knowledge today.
+            </p>
+            <div class="streak-badge">
+              🔥 <span id="wStreak">0</span>-day streak
+            </div>
+          </div>
+          <div class="stats-row fu1">
+            <div class="stat-card">
+              <div class="stat-label">Questions</div>
+              <div class="stat-val" id="stTotal" style="color: var(--accent)">
+                0
+              </div>
+              <div class="stat-sub">Attempted</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Accuracy</div>
+              <div class="stat-val" id="stAcc" style="color: var(--green)">
+                0%
+              </div>
+              <div class="stat-sub">Overall</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">XP Points</div>
+              <div class="stat-val" id="stXP" style="color: var(--gold)">0</div>
+              <div class="stat-sub">Earned</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Rank</div>
+              <div class="stat-val" id="stRank" style="color: var(--purple)">
+                #—
+              </div>
+              <div class="stat-sub">Leaderboard</div>
+            </div>
+          </div>
+          <div class="sec-title fu2">Subjects</div>
+          <div class="subj-grid fu2" id="subjGrid"></div>
+          <div class="recent-row fu3">
+            <div class="recent-card">
+              <h3>Recent Activity</h3>
+              <div id="actList">
+                <div
+                  style="
+                    color: var(--text3);
+                    font-size: 12px;
+                    text-align: center;
+                    padding: 1rem;
+                  "
+                >
+                  No activity yet
+                </div>
+              </div>
+            </div>
+            <div class="recent-card">
+              <h3>🏆 Best Scores</h3>
+              <div id="bestList">
+                <div
+                  style="
+                    color: var(--text3);
+                    font-size: 12px;
+                    text-align: center;
+                    padding: 1rem;
+                  "
+                >
+                  Complete a quiz to see scores
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUIZ SELECT -->
+      <div class="sub" id="subQS">
+        <div class="qs-wrap">
+          <div class="qs-hdr fu">
+            <h1>Start Practice Session</h1>
+            <p>Choose exam, subject, topic, and options</p>
+          </div>
+          <!-- STEP 1: Exam Mode -->
+          <div class="qs-step fu1">
+            <div class="qs-step-label">
+              <span class="step-num">1</span> Exam Type
+            </div>
+            <div class="mode-tabs">
+              <div
+                class="mtab active"
+                data-mode="JAMB"
+                onclick="pickMode(this, 'JAMB')"
+              >
+                JAMB UTME<span class="mtab-sub">1999–2025</span>
+              </div>
+              <div
+                class="mtab"
+                data-mode="WAEC"
+                onclick="pickMode(this, 'WAEC')"
+              >
+                WAEC / SSCE<span class="mtab-sub">1999–2025</span>
+              </div>
+              <div
+                class="mtab"
+                data-mode="Both"
+                onclick="pickMode(this, 'Both')"
+              >
+                Practice (Both)<span class="mtab-sub">JAMB + WAEC</span>
+              </div>
+              <div class="mtab" data-mode="AI" onclick="pickMode(this, 'AI')">
+                AI Practice<span class="mtab-sub">AI-generated</span>
+              </div>
+            </div>
+          </div>
+          <!-- STEP 2: Subject -->
+          <div class="qs-step fu2">
+            <div class="qs-step-label">
+              <span class="step-num">2</span> Subject
+            </div>
+            <div class="chips" id="subjChips">
+              <div class="chip on" data-sub="Physics" onclick="pickSubj(this)">
+                ⚛️ Physics
+              </div>
+              <div class="chip" data-sub="Chemistry" onclick="pickSubj(this)">
+                🧪 Chemistry
+              </div>
+              <div class="chip" data-sub="Biology" onclick="pickSubj(this)">
+                🧬 Biology
+              </div>
+              <div class="chip" data-sub="Mathematics" onclick="pickSubj(this)">
+                📐 Mathematics
+              </div>
+              <div class="chip" data-sub="English" onclick="pickSubj(this)">
+                📚 English
+              </div>
+            </div>
+          </div>
+          <!-- STEP 3: Topic -->
+          <div class="qs-step fu2">
+            <div class="qs-step-label">
+              <span class="step-num">3</span> Topic
+              <span
+                style="font-weight: 400; color: var(--text3); font-size: 10px"
+                >(pick one or All Topics)</span
+              >
+            </div>
+            <div class="chips" id="topicChips"></div>
+          </div>
+          <!-- STEP 4: Options -->
+          <div class="cfg-grid fu3">
+            <div class="cfg-block">
+              <h3>Difficulty</h3>
+              <div class="chips" id="diffChips">
+                <div
+                  class="chip on"
+                  data-diff="All"
+                  onclick="pickChip(this, 'diffChips')"
+                >
+                  All
+                </div>
+                <div
+                  class="chip"
+                  data-diff="Easy"
+                  onclick="pickChip(this, 'diffChips')"
+                >
+                  Easy
+                </div>
+                <div
+                  class="chip"
+                  data-diff="Medium"
+                  onclick="pickChip(this, 'diffChips')"
+                >
+                  Medium
+                </div>
+                <div
+                  class="chip"
+                  data-diff="Hard"
+                  onclick="pickChip(this, 'diffChips')"
+                >
+                  Hard
+                </div>
+              </div>
+            </div>
+            <div class="cfg-block">
+              <h3>Questions</h3>
+              <div class="chips" id="cntChips">
+                <div
+                  class="chip on"
+                  data-cnt="10"
+                  onclick="pickChip(this, 'cntChips')"
+                >
+                  10
+                </div>
+                <div
+                  class="chip"
+                  data-cnt="20"
+                  onclick="pickChip(this, 'cntChips')"
+                >
+                  20
+                </div>
+                <div
+                  class="chip"
+                  data-cnt="40"
+                  onclick="pickChip(this, 'cntChips')"
+                >
+                  40
+                </div>
+                <div
+                  class="chip"
+                  data-cnt="0"
+                  onclick="pickChip(this, 'cntChips')"
+                >
+                  All
+                </div>
+              </div>
+            </div>
+            <div class="cfg-block">
+              <h3>Timer per Question</h3>
+              <div class="chips" id="timeChips">
+                <div
+                  class="chip on"
+                  data-time="60"
+                  onclick="pickChip(this, 'timeChips')"
+                >
+                  60s
+                </div>
+                <div
+                  class="chip"
+                  data-time="90"
+                  onclick="pickChip(this, 'timeChips')"
+                >
+                  90s
+                </div>
+                <div
+                  class="chip"
+                  data-time="120"
+                  onclick="pickChip(this, 'timeChips')"
+                >
+                  2 min
+                </div>
+                <div
+                  class="chip"
+                  data-time="0"
+                  onclick="pickChip(this, 'timeChips')"
+                >
+                  No limit
+                </div>
+              </div>
+            </div>
+            <div class="cfg-block">
+              <h3>Question Year Range</h3>
+              <div class="chips" id="yearChips">
+                <div
+                  class="chip on"
+                  data-yr="all"
+                  onclick="pickChip(this, 'yearChips')"
+                >
+                  All years
+                </div>
+                <div
+                  class="chip"
+                  data-yr="old"
+                  onclick="pickChip(this, 'yearChips')"
+                >
+                  1999–2009
+                </div>
+                <div
+                  class="chip"
+                  data-yr="mid"
+                  onclick="pickChip(this, 'yearChips')"
+                >
+                  2010–2018
+                </div>
+                <div
+                  class="chip"
+                  data-yr="new"
+                  onclick="pickChip(this, 'yearChips')"
+                >
+                  2019–2025
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn-start fu3" onclick="startQuiz()">
+            Begin Practice Session →
+          </button>
+        </div>
+      </div>
+
+      <!-- QUIZ ACTIVE -->
+      <div class="sub" id="subQA">
+        <div class="qa-wrap">
+          <div class="qa-top">
+            <div class="qa-subj">
+              <div class="dot" id="qaDot"></div>
+              <span id="qaSubj">Physics</span>
+              <span
+                style="
+                  color: var(--text3);
+                  font-size: 10px;
+                  font-family: var(--mono);
+                "
+                id="qaMode"
+                >JAMB</span
+              >
+            </div>
+            <div class="qa-meta">
+              <div class="score-pill">⚡ <span id="liveScore">0</span> pts</div>
+              <div class="timer-wrap" id="timerWrap">
+                <svg viewBox="0 0 50 50" width="50" height="50">
+                  <circle
+                    cx="25"
+                    cy="25"
+                    r="21"
+                    fill="none"
+                    stroke="rgba(255,255,255,.07)"
+                    stroke-width="3"
+                  />
+                  <circle
+                    cx="25"
+                    cy="25"
+                    r="21"
+                    fill="none"
+                    stroke-width="3"
+                    id="timerArc"
+                    stroke-dasharray="131.9"
+                    stroke-dashoffset="0"
+                    stroke-linecap="round"
+                    style="
+                      stroke: var(--gold);
+                      transition:
+                        stroke-dashoffset 0.9s linear,
+                        stroke 0.3s;
+                    "
+                  />
+                </svg>
+                <div class="timer-txt" id="timerTxt">60s</div>
+              </div>
+            </div>
+          </div>
+          <div class="prog-track">
+            <div class="prog-fill" id="qaProg" style="width: 0%"></div>
+          </div>
+          <div class="q-card">
+            <div class="q-ytag" id="qaYtag">JAMB 2019</div>
+            <div class="q-num" id="qaNum">Question 1 / 10</div>
+            <div class="q-text" id="qaText">Loading...</div>
+          </div>
+          <div class="opts-list" id="optsList"></div>
+          <div class="exp-box" id="expBox">
+            <div class="exp-head" id="expHead">✓ Correct!</div>
+            <div class="exp-txt" id="expTxt"></div>
+          </div>
+          <div class="qa-acts">
+            <button class="btn-skip" onclick="skipQ()">Skip</button>
+            <button
+              class="btn-submit"
+              id="btnSubmit"
+              onclick="submitAns()"
+              disabled
+            >
+              Select an answer
+            </button>
+            <button class="btn-next" id="btnNext" onclick="nextQ()">
+              Next →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="sub" id="subRes">
+        <div class="res-wrap">
+          <span class="res-trophy" id="resTrophy">🏆</span>
+          <div class="res-score" id="resScore">8/10</div>
+          <div class="res-label" id="resLabel">Great work!</div>
+          <div class="res-stats">
+            <div class="rstat">
+              <div class="rstat-val" id="rsCorrect" style="color: var(--green)">
+                0
+              </div>
+              <div class="rstat-lbl">Correct</div>
+            </div>
+            <div class="rstat">
+              <div class="rstat-val" id="rsWrong" style="color: var(--red)">
+                0
+              </div>
+              <div class="rstat-lbl">Wrong</div>
+            </div>
+            <div class="rstat">
+              <div class="rstat-val" id="rsSkipped" style="color: var(--text3)">
+                0
+              </div>
+              <div class="rstat-lbl">Skipped</div>
+            </div>
+            <div class="rstat">
+              <div class="rstat-val" id="rsXP" style="color: var(--gold)">
+                +0
+              </div>
+              <div class="rstat-lbl">XP Earned</div>
+            </div>
+          </div>
+          <div class="review-list">
+            <h3>Answer Review</h3>
+            <div id="rvList"></div>
+          </div>
+          <div class="res-btns">
+            <button class="btn-retry" onclick="replayQuiz()">Retry Same</button>
+            <button class="btn-home2" onclick="goTab('dash')">
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEADERBOARD -->
+      <div class="sub" id="subLB">
+        <div class="lb-wrap">
+          <h1>🏆 Leaderboard</h1>
+          <div class="podium" id="lbPodium"></div>
+          <div class="lb-table" id="lbTable"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
