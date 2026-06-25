@@ -1,4 +1,4 @@
-# EduPeak — Nigerian Study Platform
+# MarvelPeak — Nigerian Study Platform
 
 > A fully offline, single-file study game built for Nigerian secondary school students preparing for **JAMB (UTME)** and **WAEC/SSCE** examinations.
 
@@ -205,7 +205,7 @@ All user data (accounts, XP, scores, activity) is saved to `localStorage` in the
 ## File Structure
 
 ```
-EduPeak_StudyApp.html
+MarvelPeak_StudyApp.html
 │
 ├── <style>          CSS — splash, login, navigation, dashboard,
 │                    quiz UI, results, leaderboard (all inline)
