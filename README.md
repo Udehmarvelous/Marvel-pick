@@ -201,6 +201,9 @@ When using AI Practice, the app calls the **Anthropic Claude API** to generate f
 All user data (accounts, XP, scores, activity) is saved to `localStorage` in the browser. Data persists across sessions as long as the browser cache is not cleared. Data is stored per-browser and is not synced across devices.
 
 ---
+## Web sit 
+You can check out the main project on https://marvelpeak.marveltech.name.ng/
+
 
 ## File Structure
 
@@ -245,3 +248,4 @@ MarvelPeak_StudyApp.html
 ## License
 
 This project is built for educational use by Nigerian secondary school students. All past examination questions are reproduced for study purposes.
+
